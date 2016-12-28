@@ -36,6 +36,10 @@ namespace Wcfsimplelibrary
 
         }
 
-      
+        public string DateReturn()
+        {
+           DateTime date = DateTime.Now;
+            return date.ToString();
+        }
     }
 }

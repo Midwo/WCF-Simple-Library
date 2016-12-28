@@ -14,7 +14,8 @@ namespace Wcfsimplelibrary
         [OperationContract]
         string WelcomeHistory(DataContractIService1WelcomeHistory ALL);
 
-
+        [OperationContract]
+        string DateReturn();
         // TODO: Add your service operations here
     }
 
