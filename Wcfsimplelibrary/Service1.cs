@@ -41,5 +41,20 @@ namespace Wcfsimplelibrary
            DateTime date = DateTime.Now;
             return date.ToString();
         }
+
+        public string ReadText()
+        {
+            string path = "MyTest.txt";
+            using (StreamReader sr = new StreamReader(path))
+            {
+                string all ="";
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    all += line;
+                }
+                return all;
+            }
+        }
     }
 }
