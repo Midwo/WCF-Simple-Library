@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -10,22 +11,31 @@ namespace Wcfsimplelibrary
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
     public class Service1 : IService1
     {
-        public string GetData(int value)
+        public string WelcomeHistory(DataContractIService1WelcomeHistory All)
         {
-            return string.Format("You entered: {0}", value);
+            string path = "MyTest.txt";
+            if (File.Exists(path))
+            {
+                using (StreamWriter sw = new StreamWriter(path, true))
+                {
+                    sw.WriteLine("Type: " + All.AgentAction + ", Author: " + All.Author + ", Message: " + All.Message + "");
+                }
+            }
+
+            if (!File.Exists(path))
+            {
+                using (StreamWriter sw = File.CreateText(path))
+                {
+                    sw.WriteLine("Type: " + All.AgentAction + ", Author: " + All.Author + ", Message: " + All.Message + "");
+                }
+            }
+       
+            return string.Format("Save in file txt: Type: {0}, Author: {1}, Message {2}", All.AgentAction, All.Author, All.Message);
+
+
+
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
+      
     }
 }
