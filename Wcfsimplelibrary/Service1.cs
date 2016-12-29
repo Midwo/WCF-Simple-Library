@@ -56,5 +56,12 @@ namespace Wcfsimplelibrary
                 return all;
             }
         }
+
+       public string SendOrder(DataContractIService1SendOrder data)
+        {
+
+
+            return "";
+        }
     }
 }

@@ -16,7 +16,10 @@ namespace Wcfsimplelibrary
 
         [OperationContract]
         string DateReturn();
-        // TODO: Add your service operations here
+
+
+        [OperationContract]
+        string SendOrder(DataContractIService1SendOrder data);
 
         [OperationContract]
         string ReadText();
