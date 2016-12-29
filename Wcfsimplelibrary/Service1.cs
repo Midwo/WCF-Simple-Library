@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
@@ -59,9 +61,32 @@ namespace Wcfsimplelibrary
 
        public string SendOrder(DataContractIService1SendOrder data)
         {
+            var fromAddress = new MailAddress("infomdticket@gmail.com", "YourOrderInformation");
+            var toAddress = new MailAddress(""+data.Emailclient+"");
+            const string fromPassword = "";
+            string subject = "Your order "+data.Clientname+"";
+            string body = "Witaj "+data.Clientname+", zamówienie złożone: " + System.DateTime.Now.ToString() + " w postaci "+data.Itemname+" o wartosci: "+data.Value+"PLN, zostało wysłane na adres: "+data.Adressinfomation+", "+data.Country+". Zamowięnie ma status: "+data.Finishorder+"";
 
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
 
-            return "";
+            }
+
+            return "Send completed";
         }
     }
 }
